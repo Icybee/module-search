@@ -121,6 +121,7 @@ select.unstyled
 	color: white;
 	background: #0064CD;
 	background-image: -moz-linear-gradient(center top , #049CDB, #0064CD);
+	background-image: linear-gradient(to bottom, #049CDB, #0064CD);
 	padding-left: 2ex;
 	padding-right: 2ex;
 }

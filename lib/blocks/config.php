@@ -32,7 +32,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 		$document->js->add('../../public/admin.js');
 	}
 
-	protected function get_attributes()
+	protected function lazy_get_attributes()
 	{
 		global $core;
 
@@ -49,7 +49,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 
 		return \ICanBoogie\array_merge_recursive
 		(
-			parent::get_attributes(), array
+			parent::lazy_get_attributes(), array
 			(
 				Element::GROUPS => array
 				(
@@ -62,7 +62,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 		);
 	}
 
-	protected function get_children()
+	protected function lazy_get_children()
 	{
 		global $core;
 
@@ -70,7 +70,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 
 		return array_merge
 		(
-			parent::get_children(), array
+			parent::lazy_get_children(), array
 			(
 				"local[$ns.scope]" => $this->create_control_scope(),
 

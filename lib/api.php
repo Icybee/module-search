@@ -158,7 +158,7 @@ function query_pages($search, $position, $limit)
 
 	$entries = $model->query
 	(
-		'SELECT node.*, page.*, content.content AS body ' . $query_part . ' ORDER BY created DESC LIMIT ' . ($position * $limit) . ', ' . $limit, $query_args
+		'SELECT node.*, page.*, content.content AS body ' . $query_part . ' ORDER BY created_at DESC LIMIT ' . ($position * $limit) . ', ' . $limit, $query_args
 	)
 	->fetchAll(\PDO::FETCH_CLASS, 'Icybee\Modules\Pages\Page', array($model));
 

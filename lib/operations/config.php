@@ -22,7 +22,7 @@ class ConfigOperation extends \Icybee\ConfigOperation
 		$key = $this->module->flat_id . '.scope';
 		$scope = null;
 
-		if ($request['local'][$key])
+		if (isset($request['local'][$key]))
 		{
 			$scope = implode(',', array_keys($request['local'][$key]));
 

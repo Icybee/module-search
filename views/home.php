@@ -25,6 +25,125 @@ use Icybee\Modules\Pages\Model as PagesModel;
 
 require_once dirname(__DIR__) . '/lib/api.php';
 
+$providers_info = array
+(
+	'contents:news' => array
+	(
+		'id' => 'contents:news',
+		'constructor' => 'Icybee\Modules\Contents\SearchProvider',
+		'options' => '{ constructor: "news" }'
+	),
+
+	'pages' => array
+	(
+		'id' => 'pages',
+		'constructor' => 'Icybee\Modules\Pages\SearchProvider',
+		'options' => array()
+	)
+);
+
+
+class QueryInfo
+{
+	public $words;
+	public $page;
+	public $limit;
+}
+
+class ResultList
+{
+	public $title;
+	public $more_link;
+	protected $items;
+}
+
+class ResultItem
+{
+	public $title;
+	public $body;
+	public $href;
+}
+
+class SearchPlugin
+{
+	public $id;
+
+	public $title;
+}
+
+interface SearchInterface
+{
+
+}
+
+trait SearchHandler
+{
+	public function __get($property)
+	{
+		switch ($property)
+		{
+
+		}
+	}
+
+	private $indexer;
+	private $provider;
+}
+
+class SearchIndexer
+{
+
+}
+
+class SearchProvider
+{
+	static public function from($attributes)
+	{
+		$attributes += [
+
+			'id' => null,
+			'constructor' => null,
+			'options' => null
+		];
+
+		$id = $attributes['id'];
+		$constructor = $attributes['constructor'];
+		$options = $attributes['options'];
+
+		return new $constructor($options + [ 'id' => $id ]);
+	}
+
+	protected $options;
+
+	public function __construct(array $options=array())
+	{
+		$this->options = $options;
+	}
+
+	public function __invoke(QueryInfo $query_info)
+	{
+
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $_home_limit = $core->site->metas->get('search.limits.home', 5);
 $_list_limit = $core->site->metas->get('search.limits.list', 10);
 

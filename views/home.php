@@ -11,8 +11,6 @@
 
 namespace Icybee\Modules\Search;
 
-use ICanBoogie\Event;
-use ICanBoogie\Exception;
 use ICanBoogie\I18n;
 
 use Brickrouge\Button;
@@ -159,7 +157,7 @@ $constructors = $core->site->metas['search.scope'];
 
 if (!count($constructors))
 {
-	throw new Exception\Config($module);
+	throw new \ICanBoogie\Exception\Config($module);
 }
 
 $constructors = explode(',', $constructors);

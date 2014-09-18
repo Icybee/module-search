@@ -11,7 +11,6 @@
 
 namespace Icybee\Modules\Search;
 
-use ICanBoogie\Exception;
 use ICanBoogie\I18n;
 
 use Brickrouge\Element;
@@ -28,7 +27,7 @@ class Hooks
 
 		if (!$page)
 		{
-			throw new Exception\Config($core->modules['search']);
+			throw new \ICanBoogie\Exception\Config($core->modules['search']);
 		}
 
 		$label = I18n\t('search.label.search');

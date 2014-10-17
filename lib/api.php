@@ -3,6 +3,7 @@
 namespace Icybee\Modules\Search;
 
 use ICanBoogie\I18n;
+use ICanBoogie\Module\Descriptor;
 
 use Brickrouge\Pager;
 
@@ -217,7 +218,7 @@ function make_set($constructor, $entries, $count, $search, $has_pager=false)
 
 	if (empty($_GET['constructor']))
 	{
-		$title = ($constructor == 'google' ? 'Google' : $core->modules->descriptors[$constructor][Module::T_TITLE]);
+		$title = ($constructor == 'google' ? 'Google' : $core->modules->descriptors[$constructor][Descriptor::TITLE]);
 		$title = I18n\t(strtr($constructor, '.', '_'), array(), array('scope' => 'module_title', 'default' => $title));
 
 		$rc .= '<h2>' . $title . '</h2>';

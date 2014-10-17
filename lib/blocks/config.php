@@ -12,6 +12,7 @@
 namespace Icybee\Modules\Search;
 
 use ICanBoogie\I18n;
+use ICanBoogie\Module\Descriptor;
 
 use Brickrouge\A;
 use Brickrouge\Element;
@@ -113,7 +114,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 				continue;
 			}
 
-			$options[$module_id] = I18n\t($descriptor[Module::T_TITLE], array(), array('scope' => 'module_title'));
+			$options[$module_id] = I18n\t($descriptor[Descriptor::TITLE], array(), array('scope' => 'module_title'));
 		}
 
 		$options['google'] = '<em>Google</em>';

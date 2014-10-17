@@ -2,12 +2,12 @@
 
 namespace Icybee\Modules\Search;
 
-use ICanBoogie\Module;
+use ICanBoogie\Module\Descriptor;
 
 return array
 (
-	Module::T_CATEGORY => 'features',
-	Module::T_DESCRIPTION => 'Provides a search engine for contents and pages.',
-	Module::T_NAMESPACE => __NAMESPACE__,
-	Module::T_TITLE => 'Search'
+	Descriptor::CATEGORY => 'features',
+	Descriptor::DESCRIPTION => 'Provides a search engine for contents and pages.',
+	Descriptor::NS => __NAMESPACE__,
+	Descriptor::TITLE => 'Search'
 );

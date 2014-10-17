@@ -12,6 +12,7 @@
 namespace Icybee\Modules\Search;
 
 use ICanBoogie\I18n;
+use ICanBoogie\Module\Descriptor;
 
 use Brickrouge\Button;
 use Brickrouge\Element;
@@ -185,7 +186,7 @@ foreach ($constructors as $constructor)
 		continue;
 	}
 
-	$constructors_options[$constructor] = I18n\t(strtr($constructor, '.', '_'), array(), array('scope' => 'module_title', 'default' => $core->modules->descriptors[$constructor][Module::T_TITLE]));
+	$constructors_options[$constructor] = I18n\t(strtr($constructor, '.', '_'), array(), array('scope' => 'module_title', 'default' => $core->modules->descriptors[$constructor][Descriptor::TITLE]));
 }
 
 $document->js->add('../public/widget.js');

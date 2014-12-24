@@ -142,14 +142,13 @@ function query_google($search, $position, $limit)
 
 function query_pages($search, $position, $limit)
 {
-	global $core;
-
-	$model = $core->models['pages'];
+	$app = \ICanBoogie\app();
+	$model = $app->models['pages'];
 
 	$query_part = 'FROM {self_and_related} INNER JOIN {self}__contents content ON (nid = pageid AND contentid = "body")
 	WHERE is_online = 1 AND siteid = ? AND editor != "view" AND content LIKE ?';
 
-	$query_args = array($core->site_id, '%' . $search . '%');
+	$query_args = array($app->site_id, '%' . $search . '%');
 
 	$count = $model->query
 	(
@@ -168,20 +167,20 @@ function query_pages($search, $position, $limit)
 
 function query_contents($constructor, $search, $position, $limit)
 {
-	global $core;
+	$app = \ICanBoogie\app();
 
 	if ($constructor == 'contents')
 	{
 		$query_part = 'is_online = 1 AND (siteid = 0 OR siteid = ?)';
-		$query_args = array($core->site_id);
+		$query_args = array($app->site_id);
 	}
 	else
 	{
 		$query_part = 'is_online = 1 AND (siteid = 0 OR siteid = ?) AND constructor = ?';
-		$query_args = array($core->site_id, $constructor);
+		$query_args = array($app->site_id, $constructor);
 	}
 
-	$model = $core->models[$constructor];
+	$model = $app->models[$constructor];
 
 	$words = explode(' ', $search);
 	$words = array_map(function($str) {
@@ -210,7 +209,7 @@ function query_contents($constructor, $search, $position, $limit)
 
 function make_set($constructor, $entries, $count, $search, $has_pager=false)
 {
-	global $core;
+	$app = \ICanBoogie\app();
 
 	$flat_id = 'module.' . strtr($constructor, '.', '_');
 
@@ -218,7 +217,7 @@ function make_set($constructor, $entries, $count, $search, $has_pager=false)
 
 	if (empty($_GET['constructor']))
 	{
-		$title = ($constructor == 'google' ? 'Google' : $core->modules->descriptors[$constructor][Descriptor::TITLE]);
+		$title = ($constructor == 'google' ? 'Google' : $app->modules->descriptors[$constructor][Descriptor::TITLE]);
 		$title = I18n\t(strtr($constructor, '.', '_'), array(), array('scope' => 'module_title', 'default' => $title));
 
 		$rc .= '<h2>' . $title . '</h2>';
@@ -255,7 +254,7 @@ function make_set($constructor, $entries, $count, $search, $has_pager=false)
 					'div', array
 					(
 						Pager::T_COUNT => $count,
-						Pager::T_LIMIT => $core->site->metas->get('search.limits.list', 10),
+						Pager::T_LIMIT => $app->site->metas->get('search.limits.list', 10),
 						Pager::T_POSITION => isset($_GET['page']) ? (int) $_GET['page'] : 0,
 						Pager::T_WITH => 'q,constructor',
 

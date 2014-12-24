@@ -21,13 +21,12 @@ class Hooks
 {
 	static public function markup_form(array $args, \Patron\Engine $patron, $template)
 	{
-		global $core, $document;
-
-		$page = $core->site->resolve_view_target('search/home');
+		$app = \ICanBoogie\app();
+		$page = $app->site->resolve_view_target('search/home');
 
 		if (!$page)
 		{
-			throw new \ICanBoogie\Exception\Config($core->modules['search']);
+			throw new \ICanBoogie\Exception\Config($app->modules['search']);
 		}
 
 		$label = I18n\t('search.label.search');

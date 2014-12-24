@@ -15,8 +15,6 @@ class ConfigOperation extends \Icybee\ConfigOperation
 {
 	protected function process()
 	{
-		global $core;
-
 		$request = $this->request;
 
 		$key = $this->module->flat_id . '.scope';
@@ -29,7 +27,7 @@ class ConfigOperation extends \Icybee\ConfigOperation
 			unset($request->params['local'][$key]);
 		}
 
-		$core->site->metas[$key] = $scope;
+		$this->app->site->metas[$key] = $scope;
 
 		return parent::process();
 	}

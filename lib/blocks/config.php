@@ -34,9 +34,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 
 	protected function lazy_get_attributes()
 	{
-		global $core;
-
-		$page = $core->site->resolve_view_target('search/home');
+		$page = $this->app->site->resolve_view_target('search/home');
 
 		if ($page)
 		{
@@ -64,8 +62,6 @@ class ConfigBlock extends \Icybee\ConfigBlock
 
 	protected function lazy_get_children()
 	{
-		global $core;
-
 		$ns = $this->module->flat_id;
 
 		return array_merge
@@ -97,14 +93,13 @@ class ConfigBlock extends \Icybee\ConfigBlock
 
 	protected function create_control_scope()
 	{
-		global $core;
-
 		$options = array();
-		$modules = $core->modules;
+		$app = $this->app;
+		$modules = $app->modules;
 
-		foreach ($core->modules->descriptors as $module_id => $descriptor)
+		foreach ($app->modules->descriptors as $module_id => $descriptor)
 		{
-			if (!isset($core->modules[$module_id]))
+			if (!isset($app->modules[$module_id]))
 			{
 				continue;
 			}
@@ -125,7 +120,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 
 		$ns = $this->module->flat_id;
 
-		$scope = explode(',', $core->site->metas[$ns . '.scope']);
+		$scope = explode(',', $app->site->metas[$ns . '.scope']);
 		$scope = array_combine($scope, array_fill(0, count($scope), true));
 
 		$sorted_options = array();

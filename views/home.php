@@ -141,20 +141,18 @@ class SearchProvider
 
 
 
+$_home_limit = $app->site->metas->get('search.limits.home', 5);
+$_list_limit = $app->site->metas->get('search.limits.list', 10);
 
-
-$_home_limit = $core->site->metas->get('search.limits.home', 5);
-$_list_limit = $core->site->metas->get('search.limits.list', 10);
-
-$core->document->css->add(DIR . 'public/page.css');
+$app->document->css->add(DIR . 'public/page.css');
 
 #
 #
 #
 
-$module = $core->modules['search'];
+$module = $app->modules['search'];
 
-$constructors = $core->site->metas['search.scope'];
+$constructors = $app->site->metas['search.scope'];
 
 if (!count($constructors))
 {
@@ -165,7 +163,7 @@ $constructors = explode(',', $constructors);
 
 foreach ($constructors as $i => $constructor)
 {
-	if (isset($core->modules[$constructor]))
+	if (isset($app->modules[$constructor]))
 	{
 		continue;
 	}
@@ -186,7 +184,7 @@ foreach ($constructors as $constructor)
 		continue;
 	}
 
-	$constructors_options[$constructor] = I18n\t(strtr($constructor, '.', '_'), array(), array('scope' => 'module_title', 'default' => $core->modules->descriptors[$constructor][Descriptor::TITLE]));
+	$constructors_options[$constructor] = I18n\t(strtr($constructor, '.', '_'), array(), array('scope' => 'module_title', 'default' => $app->modules->descriptors[$constructor][Descriptor::TITLE]));
 }
 
 $document->js->add('../public/widget.js');
@@ -263,7 +261,7 @@ if (empty($_GET['constructor']))
 		}
 		else
 		{
-			$model = $core->models[$constructor];
+			$model = $app->models[$constructor];
 
 			if ($model instanceof PagesModel)
 			{
@@ -292,7 +290,7 @@ else
 	}
 	else
 	{
-		$model = $core->models[$constructor];
+		$model = $app->models[$constructor];
 
 		if ($model instanceof PagesModel)
 		{

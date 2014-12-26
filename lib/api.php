@@ -97,28 +97,25 @@ if (!defined('PREG_CLASS_SEARCH_EXCLUDE'))
 function query_google($search, $position, $limit)
 {
 	$site = 'atalian.com';
-	$query = 'http://ajax.googleapis.com/ajax/services/search/web?' . http_build_query
-	(
-		array
-		(
-			'q' => $search . ' site:' . $site,
-			'start' => $position * $limit,
-			'v' => '1.0'
-		)
+	$query = 'http://ajax.googleapis.com/ajax/services/search/web?' . http_build_query([
 
-		+ array
-		(
-			'gl' => 'fr',
-			'hl' => 'fr',
-			'rsz' => 'large'
-		)
-	);
+		'q' => $search . ' site:' . $site,
+		'start' => $position * $limit,
+		'v' => '1.0'
+
+	] + [
+
+		'gl' => 'fr',
+		'hl' => 'fr',
+		'rsz' => 'large'
+
+	]);
 
 	$rc = file_get_contents($query);
 
 	$response = json_decode($rc)->responseData;
 
-	$entries = array();
+	$entries = [];
 	$count = $response->cursor->estimatedResultCount;
 
 	if ($response->results)
@@ -128,16 +125,17 @@ function query_google($search, $position, $limit)
 			$shortUrl = $result->unescapedUrl;
 			$shortUrl = substr($shortUrl, strpos($shortUrl, $site) + strlen($site));
 
-			$entries[] = (object) array
-			(
+			$entries[] = (object)  [
+
 				'url' => $shortUrl,
 				'title' => $result->title,
 				'body' => $result->content
-			);
+
+			];
 		}
 	}
 
-	return array($entries, $count);
+	return [ $entries, $count ];
 }
 
 function query_pages($search, $position, $limit)
@@ -148,7 +146,7 @@ function query_pages($search, $position, $limit)
 	$query_part = 'FROM {self_and_related} INNER JOIN {self}__contents content ON (nid = pageid AND contentid = "body")
 	WHERE is_online = 1 AND siteid = ? AND editor != "view" AND content LIKE ?';
 
-	$query_args = array($app->site_id, '%' . $search . '%');
+	$query_args = [ $app->site_id, '%' . $search . '%' ];
 
 	$count = $model->query
 	(
@@ -160,9 +158,9 @@ function query_pages($search, $position, $limit)
 	(
 		'SELECT node.*, page.*, content.content AS body ' . $query_part . ' ORDER BY created_at DESC LIMIT ' . ($position * $limit) . ', ' . $limit, $query_args
 	)
-	->fetchAll(\PDO::FETCH_CLASS, 'Icybee\Modules\Pages\Page', array($model));
+	->fetchAll(\PDO::FETCH_CLASS, 'Icybee\Modules\Pages\Page', [ $model ]);
 
-	return array($entries, $count);
+	return [ $entries, $count ];
 }
 
 function query_contents($constructor, $search, $position, $limit)
@@ -172,12 +170,12 @@ function query_contents($constructor, $search, $position, $limit)
 	if ($constructor == 'contents')
 	{
 		$query_part = 'is_online = 1 AND (siteid = 0 OR siteid = ?)';
-		$query_args = array($app->site_id);
+		$query_args = [ $app->site_id ];
 	}
 	else
 	{
 		$query_part = 'is_online = 1 AND (siteid = 0 OR siteid = ?) AND constructor = ?';
-		$query_args = array($app->site_id, $constructor);
+		$query_args = [ $app->site_id, $constructor ];
 	}
 
 	$model = $app->models[$constructor];
@@ -189,7 +187,7 @@ function query_contents($constructor, $search, $position, $limit)
 
 	}, $words);
 
-	$properties = array('title', 'body');
+	$properties = [ 'title', 'body' ];
 	$concat = str_repeat(' AND CONCAT_WS(" ", ' . implode(', ', $properties) . ') LIKE ?', count($words));
 
 	$query_part .= ' AND (' . substr($concat, 4) . ')';
@@ -200,7 +198,7 @@ function query_contents($constructor, $search, $position, $limit)
 	$count = $arq->count;
 	$entries = $arq->limit($position * $limit, $limit)->order('date DESC')->all;
 
-	return array($entries, $count);
+	return [ $entries, $count ];
 }
 
 
@@ -218,13 +216,13 @@ function make_set($constructor, $entries, $count, $search, $has_pager=false)
 	if (empty($_GET['constructor']))
 	{
 		$title = ($constructor == 'google' ? 'Google' : $app->modules->descriptors[$constructor][Descriptor::TITLE]);
-		$title = I18n\t(strtr($constructor, '.', '_'), array(), array('scope' => 'module_title', 'default' => $title));
+		$title = I18n\t(strtr($constructor, '.', '_'), [ ], [ 'scope' => 'module_title', 'default' => $title ]);
 
 		$rc .= '<h2>' . $title . '</h2>';
 	}
 
 	$rc .= '<p class="count">';
-	$rc .= I18n\t('found', array(':count' => $count, '%search' => $search), array('scope' => $flat_id . '.search'));
+	$rc .= I18n\t('found', [ ':count' => $count, '%search' => $search ], [ 'scope' => $flat_id . '.search' ]);
 	$rc .= '</p>';
 
 	if ($entries)
@@ -249,25 +247,23 @@ function make_set($constructor, $entries, $count, $search, $has_pager=false)
 		{
 			if ($has_pager)
 			{
-				$rc .= new Pager
-				(
-					'div', array
-					(
-						Pager::T_COUNT => $count,
-						Pager::T_LIMIT => $app->site->metas->get('search.limits.list', 10),
-						Pager::T_POSITION => isset($_GET['page']) ? (int) $_GET['page'] : 0,
-						Pager::T_WITH => 'q,constructor',
+				$rc .= new Pager('div', [
 
-						'class' => 'pagination'
-					)
-				);
+					Pager::T_COUNT => $count,
+					Pager::T_LIMIT => $app->site->metas->get('search.limits.list', 10),
+					Pager::T_POSITION => isset($_GET['page']) ? (int) $_GET['page'] : 0,
+					Pager::T_WITH => 'q,constructor',
+
+					'class' => 'pagination'
+
+				]);
 			}
 			else
 			{
-				$more_url = '?' . http_build_query(array('q' => $search, 'constructor' => $constructor));
+				$more_url = '?' . http_build_query([ 'q' => $search, 'constructor' => $constructor ]);
 
 				$rc .= '<p class="more"><a href="' . $more_url . '">';
-				$rc .= I18n\t('more', array(':count' => $count, '%search' => $search), array('scope' => array($flat_id, 'search')));
+				$rc .= I18n\t('more', [ ':count' => $count, '%search' => $search ], [ 'scope' => [ $flat_id, 'search' ] ]);
 				$rc .= '</a></p>';
 			}
 		}
@@ -279,20 +275,15 @@ function make_set($constructor, $entries, $count, $search, $has_pager=false)
 }
 
 
-
-
 /**
  * Returns snippets from a piece of text, with certain keywords highlighted.
  * Used for formatting search results.
  *
- * @param $keys
- *   A string containing a search query.
+ * @param $keys A string containing a search query.
  *
- * @param $text
- *   The text to extract fragments from.
+ * @param $text The text to extract fragments from.
  *
- * @return
- *   A string containing HTML for the excerpt.
+ * @return mixed|string A string containing HTML for the excerpt.
  */
 function search_excerpt($keys, $text) {
 	// We highlight around non-indexable or CJK characters.

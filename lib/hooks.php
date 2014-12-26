@@ -31,26 +31,26 @@ class Hooks
 
 		$label = I18n\t('search.label.search');
 
-		$tags = array
-		(
+		$tags = [
+
 			Form::VALUES => $_GET,
 
-			Element::CHILDREN => array
-			(
-				'q' => new Searchbox
-				(
-					array
-					(
-						Form::LABEL => $label,
-						'placeholder' => $label
-					)
-				)
-			),
+			Element::CHILDREN => [
+
+				'q' => new Searchbox([
+
+					Form::LABEL => $label,
+					'placeholder' => $label
+
+				])
+
+			],
 
 			'class' => 'navbar-search',
 			'method' => \ICanBoogie\HTTP\Request::METHOD_GET,
 			'action' => $page->url
-		);
+
+		];
 
 		return $template ? new \WdTemplatedForm($tags, $patron($template)) : (string) new Form($tags);
 	}
@@ -58,18 +58,20 @@ class Hooks
 	// TODO: move to the module and use registry configuration.
 	// TODO: user->language ?
 
-	static protected $config = array
-	(
+	static protected $config = [
+
 		'url' => 'http://ajax.googleapis.com/ajax/services/search/web',
-		'options' => array
-		(
+		'options' => [
+
 			'gl' => 'fr',
 			'hl' => 'fr',
 			'rsz' => 'large'
-		)
-	);
 
-	static public function search($query, $start=0, array $options=array())
+		]
+
+	];
+
+	static public function search($query, $start=0, array $options=[])
 	{
 		global $registry;
 
@@ -83,19 +85,13 @@ class Hooks
 
 		$options += self::$config['options'];
 
+		$query = self::$config['url'] . '?' . http_build_query([
 
+			'q' => $query . ' site:' . $site,
+			'start' => $start,
+			'v' => '1.0'
 
-		$query = self::$config['url'] . '?' . http_build_query
-		(
-			array
-			(
-				'q' => $query . ' site:' . $site,
-				'start' => $start,
-				'v' => '1.0'
-			)
-
-			+ $options
-		);
+		] + $options);
 
 //		echo "query: $query" . PHP_EOL;
 
@@ -116,11 +112,12 @@ class Hooks
 
 	static public function matches(array $args, \Patron\Engine $patron, $template)
 	{
-		$_GET += array
-		(
+		$_GET += [
+
 			'q' => null,
 			'start' => 0
-		);
+
+		];
 
 		$search = $_GET['q'];
 		$start = $_GET['start'];
@@ -140,7 +137,7 @@ class Hooks
 		if ($total && count($response->cursor->pages) > 1)
 		{
 			$pageIndex = $response->cursor->currentPageIndex;
-			$pages = array();
+			$pages = [];
 
 			foreach ($response->cursor->pages as $i => $page)
 			{
@@ -153,14 +150,15 @@ class Hooks
 		$patron->context['self']['q'] = $search;
 		$patron->context['self']['response'] = $response;
 		$patron->context['self']['pager'] = $pager;
-		$patron->context['self']['range'] = array
-		(
+		$patron->context['self']['range'] = [
+
 			'lower' => $start + 1,
 			'upper' => $start + $count,
 			'start' => $start,
 			'page' => $pageIndex,
 			'count' => $total
-		);
+
+		];
 
 		return $patron($template, $response->results);
 	}

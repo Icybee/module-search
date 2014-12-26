@@ -1,42 +1,49 @@
 <?php
 
-return array
-(
+return [
+
 	'module_title.search' => 'Recherche',
 
-	'search' => array
-	(
-		'found' => array
-		(
+	'search' => [
+
+		'found' => [
+
 			'none' => 'Aucun résultat trouvé.',
 			'one' => 'Un résultat trouvé.',
 			'other' => ':count résultats trouvés.'
-		),
 
-		'more' => array
-		(
+		],
+
+		'more' => [
+
 			'one' => 'Voir le résultat trouvé pour %search',
 			'other' => 'Voir les :count résultats trouvés pour %search'
-		),
 
-		'label' => array
-		(
+		],
+
+		'label' => [
+
 			'keywords' => 'Mots clé',
 			'in' => 'Rechercher dans',
 			'search' => 'Rechercher'
-		),
+
+		],
 
 		'option.all' => '<Tout>',
 
-		'config' => array
-		(
-			'description' => 'Le moteur de recherche se trouve actuellement sur la page <q>:link</q>.',
+		'config_block' => [
 
-			'description_nopage' => "Aucune page n'est définie pour afficher les résulats de
-			recherche. Si vous souhaitez proposer les fonctionnalités de recherche à vos visiteurs,
-			rendez-vous dans l'onglet :link, choisissez la page que vous souhaitez dédier à la
-			recherche, changez l'éditeur du corps de la page pour <q>Vue</q> et choisissez la vue
-			<q>Fonctionnalités/Rechercher/Rechercher sur le site</q>.",
+			'group.description' => [
+
+				'with_page' => "Le moteur de recherche se trouve actuellement sur la page <q>:link</q>.",
+
+				'without_page' => "Aucune page n'est définie pour afficher les résulats de
+				recherche. Si vous souhaitez proposer les fonctionnalités de recherche à vos visiteurs,
+				rendez-vous dans l'onglet :link, choisissez la page que vous souhaitez dédier à la
+				recherche, changez l'éditeur du corps de la page pour <q>Vue</q> et choisissez la vue
+				<q>Fonctionnalités/Rechercher/Rechercher sur le site</q>."
+
+			],
 
 			'limits_home' => "Nombre de résultats maximum par module lors de la recherche initiale",
 			'limits_list' => "Nombre de résultats maximum lors de la recherche ciblée",
@@ -45,6 +52,7 @@ return array
 			'element.description.scope' => "Sélectionner les modules pour activer la recherche.
 			Ordonner les modules par glisser-déposer pour définir l'ordre dans lequel
 			s'effectue la recherche."
-		)
-	)
-);
+
+		]
+	]
+];

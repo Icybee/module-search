@@ -1,16 +1,19 @@
 <?php
 
-return array
-(
-	'search' => array
-	(
-		'label' => array
-		(
+return [
+
+	'search' => [
+
+		'label' => [
+
 			'keywords' => 'Palabras claves',
 			'in' => 'Buscar en',
 			'search' => 'Buscar'
-		),
+
+		],
 
 		'option.all' => '<Todos>'
-	)
-);
+
+	]
+
+];

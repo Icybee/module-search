@@ -24,22 +24,25 @@ use Icybee\Modules\Pages\Model as PagesModel;
 
 require_once dirname(__DIR__) . '/lib/api.php';
 
-$providers_info = array
-(
-	'contents:news' => array
-	(
+$providers_info = [
+
+	'contents:news' => [
+
 		'id' => 'contents:news',
 		'constructor' => 'Icybee\Modules\Contents\SearchProvider',
 		'options' => '{ constructor: "news" }'
-	),
 
-	'pages' => array
-	(
+	],
+
+	'pages' => [
+
 		'id' => 'pages',
 		'constructor' => 'Icybee\Modules\Pages\SearchProvider',
-		'options' => array()
-	)
-);
+		'options' => [ ]
+
+	]
+
+];
 
 
 class QueryInfo
@@ -173,7 +176,7 @@ foreach ($constructors as $i => $constructor)
 
 //$constructors[] = 'google';
 
-$constructors_options = array(null => I18n\t('search.option.all'));
+$constructors_options = [ null => I18n\t('search.option.all') ];
 
 foreach ($constructors as $constructor)
 {
@@ -184,55 +187,49 @@ foreach ($constructors as $constructor)
 		continue;
 	}
 
-	$constructors_options[$constructor] = I18n\t(strtr($constructor, '.', '_'), array(), array('scope' => 'module_title', 'default' => $app->modules->descriptors[$constructor][Descriptor::TITLE]));
+	$constructors_options[$constructor] = I18n\t(strtr($constructor, '.', '_'), [], [ 'scope' => 'module_title', 'default' => $app->modules->descriptors[$constructor][Descriptor::TITLE] ]);
 }
 
-$document->js->add('../public/widget.js');
+$document->js->add(DIR . 'public/widget.js');
 
-$form = new Form
-(
-	array
-	(
-		Form::VALUES => $_GET,
+$form = new Form([
 
-		Element::CHILDREN => array
-		(
-			'q' => new Text
-			(
-				array
-				(
-					Form::LABEL => I18n\t('search.label.keywords'),
+	Form::VALUES => $_GET,
 
-					'autofocus' => true,
-					'placeholder' => I18n\t('search.label.keywords'),
-					'class' => 'unstyled'
-				)
-			),
+	Element::CHILDREN => [
 
-			'constructor' => new Element
-			(
-				'select', array
-				(
-					Form::LABEL => I18n\t('search.label.in'),
-					Element::OPTIONS => $constructors_options,
-					'class' => 'unstyled'
-				)
-			),
+		'q' => new Text([
 
-			new Button
-			(
-				'search.label.search', array
-				(
-					'class' => 'unstyled',
-					'type' => 'Submit'
-				)
-			)
-		),
+			Form::LABEL => I18n\t('search.label.keywords'),
 
-		'method' => 'GET',
-		'class' => 'widget-search-combo'
-	)
-);
+			'autofocus' => true,
+			'placeholder' => I18n\t('search.label.keywords'),
+			'class' => 'unstyled'
+
+		]),
+
+		'constructor' => new Element('select', [
+
+			Form::LABEL => I18n\t('search.label.in'),
+			Element::OPTIONS => $constructors_options,
+
+			'class' => 'unstyled'
+
+		]),
+
+		new Button('search.label.search', [
+
+			'class' => 'unstyled',
+			'type' => 'Submit'
+
+		])
+
+	],
+
+	'method' => 'GET',
+	'class' => 'widget-search-combo'
+
+]);
 
 echo '<div class="conditions">' . $form . '</div>';
 
@@ -278,7 +275,7 @@ if (empty($_GET['constructor']))
 }
 else if (!in_array($_GET['constructor'], $constructors))
 {
-	echo I18n\t("Le constructeur %constructor n'est pas supporté pour la recherche", array('%constructor' => $_GET['constructor']));
+	echo I18n\t("Le constructeur %constructor n'est pas supporté pour la recherche", [ '%constructor' => $_GET['constructor'] ]);
 }
 else
 {

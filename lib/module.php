@@ -11,6 +11,8 @@
 
 namespace Icybee\Modules\Search;
 
+use Icybee\Modules\Views\ViewOptions;
+
 class Module extends \Icybee\Module
 {
 	protected function lazy_get_views()
@@ -19,8 +21,8 @@ class Module extends \Icybee\Module
 
 			'home' => [
 
-				'title' => 'Rechercher sur le site',
-				'renders' => \Icybee\Modules\Views\View::RENDERS_MANY
+				ViewOptions::TITLE => 'Rechercher sur le site',
+				ViewOptions::RENDERS => ViewOptions::RENDERS_OTHER
 
 			]
 

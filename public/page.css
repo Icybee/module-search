@@ -1,5 +1,3 @@
-@CHARSET "UTF-8";
-
 #search-quick input.empty
 {
 	color: #666;
@@ -106,7 +104,7 @@ select.unstyled
 .widget-search-combo button
 {
 	height: 22px;
-	width: auto;	
+	width: auto;
 }
 
 .widget-search-combo input[type="text"]
@@ -114,14 +112,4 @@ select.unstyled
 	padding-right: 1ex;
 	border-right: 1px dotted #CFCFCF;
 	margin-right: 1ex;
-}
-
-.widget-search-combo button
-{
-	color: white;
-	background: #0064CD;
-	background-image: -moz-linear-gradient(center top , #049CDB, #0064CD);
-	background-image: linear-gradient(to bottom, #049CDB, #0064CD);
-	padding-left: 2ex;
-	padding-right: 2ex;
 }

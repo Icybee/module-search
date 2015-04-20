@@ -43,7 +43,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 		}
 		else
 		{
-			$description_link = '<q>' . new A('Pages', $app->routes['admin:pages/manage']) . '</q>';
+			$description_link = '<q>' . new A('Pages', $app->routes['admin:pages']) . '</q>';
 		}
 
 		return \ICanBoogie\array_merge_recursive(parent::lazy_get_attributes(), [

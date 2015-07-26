@@ -39,7 +39,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 
 		if ($page)
 		{
-			$description_link = (string) new A($page->title, $app->routes['admin:pages/edit']->format([ $page->nid ])->url);
+			$description_link = (string) new A($page->title, $app->routes['admin:pages:edit']->format([ 'id' => $page->nid ])->url);
 		}
 		else
 		{

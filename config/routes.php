@@ -5,7 +5,7 @@ return [
 	'admin:search' => [
 
 		'pattern' => '/admin/search',
-		'controller' => 'Icybee\BlockController',
+		'controller' => 'Icybee\Controller\BlockController',
 		'block' => 'config',
 		'index' => true,
 		'title' => 'Config.'

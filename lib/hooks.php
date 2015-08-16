@@ -21,7 +21,7 @@ class Hooks
 {
 	static public function markup_form(array $args, \Patron\Engine $patron, $template)
 	{
-		$app = \ICanBoogie\app();
+		$app = self::app();
 		$page = $app->site->resolve_view_target('search/home');
 
 		if (!$page)
@@ -29,7 +29,7 @@ class Hooks
 			throw new \ICanBoogie\Exception\Config($app->modules['search']);
 		}
 
-		$label = I18n\t('search.label.search');
+		$label = $app->translate('search.label.search');
 
 		$tags = [
 
@@ -52,7 +52,9 @@ class Hooks
 
 		];
 
-		return $template ? new \WdTemplatedForm($tags, $patron($template)) : (string) new Form($tags);
+		return $template
+			? new \WdTemplatedForm($tags, $patron($template))
+			: (string) new Form($tags);
 	}
 
 	// TODO: move to the module and use registry configuration.
@@ -71,11 +73,10 @@ class Hooks
 
 	];
 
-	static public function search($query, $start=0, array $options=[])
+	static public function search($query, $start = 0, array $options = [])
 	{
-		global $registry;
-
-		$site = $registry->get('siteSearch.host');
+		$app = self::app();
+		$site = $app->registry['siteSearch.host'];
 
 		if (!$site)
 		{
@@ -161,5 +162,13 @@ class Hooks
 		];
 
 		return $patron($template, $response->results);
+	}
+
+	/**
+	 * @return \ICanBoogie\Core|\Icybee\Binding\CoreBindings
+	 */
+	static private function app()
+	{
+		return \ICanBoogie\app();
 	}
 }

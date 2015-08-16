@@ -22,6 +22,10 @@ use Brickrouge\Text;
 use Icybee\Modules\Contents\Model as ContentsModel;
 use Icybee\Modules\Pages\Model as PagesModel;
 
+/**
+ * @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings
+ */
+
 require_once dirname(__DIR__) . '/lib/api.php';
 
 $providers_info = [
@@ -176,7 +180,7 @@ foreach ($constructors as $i => $constructor)
 
 //$constructors[] = 'google';
 
-$constructors_options = [ null => I18n\t('search.option.all') ];
+$constructors_options = [ null => $app->translate('search.option.all') ];
 
 foreach ($constructors as $constructor)
 {
@@ -187,7 +191,7 @@ foreach ($constructors as $constructor)
 		continue;
 	}
 
-	$constructors_options[$constructor] = I18n\t(strtr($constructor, '.', '_'), [], [ 'scope' => 'module_title', 'default' => $app->modules->descriptors[$constructor][Descriptor::TITLE] ]);
+	$constructors_options[$constructor] = $app->translate(strtr($constructor, '.', '_'), [], [ 'scope' => 'module_title', 'default' => $app->modules->descriptors[$constructor][Descriptor::TITLE] ]);
 }
 
 $document->js->add(DIR . 'public/widget.js');
@@ -200,17 +204,17 @@ $form = new Form([
 
 		'q' => new Text([
 
-			Form::LABEL => I18n\t('search.label.keywords'),
+			Form::LABEL => $app->translate('search.label.keywords'),
 
 			'autofocus' => true,
-			'placeholder' => I18n\t('search.label.keywords'),
+			'placeholder' => $app->translate('search.label.keywords'),
 			'class' => 'unstyled'
 
 		]),
 
 		'constructor' => new Element('select', [
 
-			Form::LABEL => I18n\t('search.label.in'),
+			Form::LABEL => $app->translate('search.label.in'),
 			Element::OPTIONS => $constructors_options,
 
 			'class' => 'unstyled'
@@ -275,7 +279,7 @@ if (empty($_GET['constructor']))
 }
 else if (!in_array($_GET['constructor'], $constructors))
 {
-	echo I18n\t("Le constructeur %constructor n'est pas supporté pour la recherche", [ '%constructor' => $_GET['constructor'] ]);
+	echo $app->translate("Le constructeur %constructor n'est pas supporté pour la recherche", [ '%constructor' => $_GET['constructor'] ]);
 }
 else
 {

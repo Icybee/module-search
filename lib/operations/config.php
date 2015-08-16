@@ -11,8 +11,12 @@
 
 namespace Icybee\Modules\Search;
 
+use Icybee\Binding\ObjectBindings;
+
 class ConfigOperation extends \Icybee\ConfigOperation
 {
+	use ObjectBindings;
+
 	protected function process()
 	{
 		$request = $this->request;

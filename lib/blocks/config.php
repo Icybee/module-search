@@ -21,6 +21,8 @@ use Brickrouge\Text;
 
 /**
  * A block to configure search.
+ *
+ * @property-read \ICanBoogie\Core|\Icybee\Binding\CoreBindings $app
  */
 class ConfigBlock extends \Icybee\ConfigBlock
 {
@@ -39,7 +41,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 
 		if ($page)
 		{
-			$description_link = (string) new A($page->title, $app->routes['admin:pages:edit']->format([ 'id' => $page->nid ])->url);
+			$description_link = (string) new A($page->title, $app->url_for('admin:pages:edit', $page));
 		}
 		else
 		{
@@ -52,7 +54,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 
 				'primary' => [
 
-					'description' => I18n\t($page ? 'with_page' : 'without_page', [
+					'description' => $this->t($page ? 'with_page' : 'without_page', [
 
 						':link' => $description_link
 
@@ -91,12 +93,12 @@ class ConfigBlock extends \Icybee\ConfigBlock
 	{
 		$options = [];
 		$app = $this->app;
-		/* @var $modules \ICanBoogie\Module\Modules */
+		/* @var $modules \ICanBoogie\Module\ModuleCollection */
 		$modules = $app->modules;
 
 		foreach ($modules->descriptors as $module_id => $descriptor)
 		{
-			if (!isset($app->modules[$module_id]))
+			if (!isset($modules[$module_id]))
 			{
 				continue;
 			}
@@ -106,7 +108,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 				continue;
 			}
 
-			$options[$module_id] = I18n\t($descriptor[Descriptor::TITLE], [], [ 'scope' => 'module_title' ]);
+			$options[$module_id] = $this->t($descriptor[Descriptor::TITLE], [], [ 'scope' => 'module_title' ]);
 		}
 
 		$options['google'] = '<em>Google</em>';

@@ -207,6 +207,8 @@ function query_contents($constructor, $search, $position, $limit)
 
 function make_set($constructor, $entries, $count, $search, $has_pager=false)
 {
+	/* @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings */
+
 	$app = \ICanBoogie\app();
 
 	$flat_id = 'module.' . strtr($constructor, '.', '_');
@@ -216,13 +218,13 @@ function make_set($constructor, $entries, $count, $search, $has_pager=false)
 	if (empty($_GET['constructor']))
 	{
 		$title = ($constructor == 'google' ? 'Google' : $app->modules->descriptors[$constructor][Descriptor::TITLE]);
-		$title = I18n\t(strtr($constructor, '.', '_'), [ ], [ 'scope' => 'module_title', 'default' => $title ]);
+		$title = $app->translate(strtr($constructor, '.', '_'), [ ], [ 'scope' => 'module_title', 'default' => $title ]);
 
 		$rc .= '<h2>' . $title . '</h2>';
 	}
 
 	$rc .= '<p class="count">';
-	$rc .= I18n\t('found', [ ':count' => $count, '%search' => $search ], [ 'scope' => $flat_id . '.search' ]);
+	$rc .= $app->translate('found', [ ':count' => $count, '%search' => $search ], [ 'scope' => $flat_id . '.search' ]);
 	$rc .= '</p>';
 
 	if ($entries)
@@ -263,7 +265,7 @@ function make_set($constructor, $entries, $count, $search, $has_pager=false)
 				$more_url = '?' . http_build_query([ 'q' => $search, 'constructor' => $constructor ]);
 
 				$rc .= '<p class="more"><a href="' . $more_url . '">';
-				$rc .= I18n\t('more', [ ':count' => $count, '%search' => $search ], [ 'scope' => [ $flat_id, 'search' ] ]);
+				$rc .= $app->translate('more', [ ':count' => $count, '%search' => $search ], [ 'scope' => [ $flat_id, 'search' ] ]);
 				$rc .= '</a></p>';
 			}
 		}
@@ -279,9 +281,9 @@ function make_set($constructor, $entries, $count, $search, $has_pager=false)
  * Returns snippets from a piece of text, with certain keywords highlighted.
  * Used for formatting search results.
  *
- * @param $keys A string containing a search query.
+ * @param string $keys A string containing a search query.
  *
- * @param $text The text to extract fragments from.
+ * @param string $text The text to extract fragments from.
  *
  * @return mixed|string A string containing HTML for the excerpt.
  */

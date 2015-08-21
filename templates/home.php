@@ -19,8 +19,8 @@ use Brickrouge\Element;
 use Brickrouge\Form;
 use Brickrouge\Text;
 
-use Icybee\Modules\Contents\Model as ContentsModel;
-use Icybee\Modules\Pages\Model as PagesModel;
+use Icybee\Modules\Contents\ContentModel as ContentsModel;
+use Icybee\Modules\Pages\PageModel as PagesModel;
 
 /**
  * @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings

@@ -140,6 +140,8 @@ function query_google($search, $position, $limit)
 
 function query_pages($search, $position, $limit)
 {
+	/* @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings */
+
 	$app = \ICanBoogie\app();
 	$model = $app->models['pages'];
 
@@ -165,6 +167,8 @@ function query_pages($search, $position, $limit)
 
 function query_contents($constructor, $search, $position, $limit)
 {
+	/* @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings */
+
 	$app = \ICanBoogie\app();
 
 	if ($constructor == 'contents')

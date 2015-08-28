@@ -38,7 +38,7 @@ return [
 				'with_page' => "The search engine is currently on the page <q>:link</q>.",
 
 				'without_page' => "There is no page defined for the search results. If you wish to
-				provide a search engine to your visitors, go to the tab :link, choose the page you
+				provide a search engine to your visitors, go to :link, choose the page you
 				want to dedicate to research, change the editor of the body of the page to
 				<q>view</q> and choose the view <q>Structure/Search/Search Site</q>."
 

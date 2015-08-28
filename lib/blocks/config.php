@@ -15,6 +15,7 @@ use ICanBoogie\I18n;
 use ICanBoogie\Module\Descriptor;
 
 use Brickrouge\A;
+use Brickrouge\Document;
 use Brickrouge\Element;
 use Brickrouge\Form;
 use Brickrouge\Text;
@@ -26,7 +27,7 @@ use Brickrouge\Text;
  */
 class ConfigBlock extends \Icybee\ConfigBlock
 {
-	static protected function add_assets(\Brickrouge\Document $document)
+	static protected function add_assets(Document $document)
 	{
 		parent::add_assets($document);
 
@@ -45,7 +46,7 @@ class ConfigBlock extends \Icybee\ConfigBlock
 		}
 		else
 		{
-			$description_link = '<q>' . new A('Pages', $app->routes['admin:pages']) . '</q>';
+			$description_link = '<q>' . new A('Pages', $app->routes['admin:pages:index']) . '</q>';
 		}
 
 		return \ICanBoogie\array_merge_recursive(parent::lazy_get_attributes(), [

@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Search;
+namespace Icybee\Modules\Search\Operation;
 
 use Icybee\Binding\ObjectBindings;
 
-class ConfigOperation extends \Icybee\ConfigOperation
+class ConfigOperation extends \Icybee\Operation\Module\ConfigOperation
 {
 	use ObjectBindings;
 

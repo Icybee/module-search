@@ -25,7 +25,7 @@ use Brickrouge\Text;
  *
  * @property-read \ICanBoogie\Core|\Icybee\Binding\CoreBindings $app
  */
-class ConfigBlock extends \Icybee\ConfigBlock
+class ConfigBlock extends \Icybee\Block\ConfigBlock
 {
 	static protected function add_assets(Document $document)
 	{

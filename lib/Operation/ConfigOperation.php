@@ -11,11 +11,11 @@
 
 namespace Icybee\Modules\Search\Operation;
 
-use Icybee\Binding\ObjectBindings;
+use Icybee\Binding\PrototypedBindings;
 
 class ConfigOperation extends \Icybee\Operation\Module\ConfigOperation
 {
-	use ObjectBindings;
+	use PrototypedBindings;
 
 	protected function process()
 	{

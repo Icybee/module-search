@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Icybee\Modules\Search;
+namespace Icybee\Modules\Search\Block;
 
 use ICanBoogie\I18n;
 use ICanBoogie\Module\Descriptor;
@@ -31,8 +31,8 @@ class ConfigBlock extends \Icybee\Block\ConfigBlock
 	{
 		parent::add_assets($document);
 
-		$document->css->add(DIR . 'public/admin.css');
-		$document->js->add(DIR . 'public/admin.js');
+		$document->css->add(\Icybee\Modules\Search\DIR . 'public/admin.css');
+		$document->js->add(\Icybee\Modules\Search\DIR . 'public/admin.js');
 	}
 
 	protected function lazy_get_attributes()

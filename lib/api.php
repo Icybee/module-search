@@ -145,7 +145,7 @@ function query_pages($search, $position, $limit)
 	$app = \ICanBoogie\app();
 	$model = $app->models['pages'];
 
-	$query_part = 'FROM {self_and_related} INNER JOIN {self}__contents content ON (nid = page_id AND contentid = "body")
+	$query_part = 'FROM {self_and_related} INNER JOIN {self}__contents content ON (nid = page_id AND content_id = "body")
 	WHERE is_online = 1 AND site_id = ? AND editor != "view" AND content LIKE ?';
 
 	$query_args = [ $app->site_id, '%' . $search . '%' ];

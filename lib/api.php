@@ -146,7 +146,7 @@ function query_pages($search, $position, $limit)
 	$model = $app->models['pages'];
 
 	$query_part = 'FROM {self_and_related} INNER JOIN {self}__contents content ON (nid = pageid AND contentid = "body")
-	WHERE is_online = 1 AND siteid = ? AND editor != "view" AND content LIKE ?';
+	WHERE is_online = 1 AND site_id = ? AND editor != "view" AND content LIKE ?';
 
 	$query_args = [ $app->site_id, '%' . $search . '%' ];
 
@@ -173,12 +173,12 @@ function query_contents($constructor, $search, $position, $limit)
 
 	if ($constructor == 'contents')
 	{
-		$query_part = 'is_online = 1 AND (siteid = 0 OR siteid = ?)';
+		$query_part = 'is_online = 1 AND (site_id = 0 OR site_id = ?)';
 		$query_args = [ $app->site_id ];
 	}
 	else
 	{
-		$query_part = 'is_online = 1 AND (siteid = 0 OR siteid = ?) AND constructor = ?';
+		$query_part = 'is_online = 1 AND (site_id = 0 OR site_id = ?) AND constructor = ?';
 		$query_args = [ $app->site_id, $constructor ];
 	}
 

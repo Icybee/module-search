@@ -37,7 +37,7 @@ return [
 
 				'with_page' => "Le moteur de recherche se trouve actuellement sur la page <q>:link</q>.",
 
-				'without_page' => "Aucune page n'est définie pour afficher les résulats de
+				'without_page' => "Aucune page n'est définie pour afficher les résultats de
 				recherche. Si vous souhaitez proposer les fonctionnalités de recherche à vos visiteurs,
 				rendez-vous dans l'onglet :link, choisissez la page que vous souhaitez dédier à la
 				recherche, changez l'éditeur du corps de la page pour <q>Vue</q> et choisissez la vue

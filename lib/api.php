@@ -205,6 +205,52 @@ function query_contents($constructor, $search, $position, $limit)
 	return [ $entries, $count ];
 }
 
+function query_files($constructor, $search, $position, $limit)
+{
+	/* @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings */
+
+	$app = \ICanBoogie\app();
+
+	if ($constructor == 'files')
+	{
+		$query_part = 'is_online = 1 AND (site_id = 0 OR site_id = ?)';
+		$query_args = [ $app->site_id ];
+	}
+	else
+	{
+		$query_part = 'is_online = 1 AND (site_id = 0 OR site_id = ?) AND constructor = ?';
+		$query_args = [ $app->site_id, $constructor ];
+	}
+
+	$model = $app->models[$constructor];
+
+	$words = explode(' ', $search);
+	$words = array_map(function($str) {
+
+		return '%' . trim($str) . '%';
+
+	}, $words);
+
+	$properties = [ 'title', 'description' ];
+	$concat = str_repeat(' AND CONCAT_WS(" ", ' . implode(', ', $properties) . ') LIKE ?', count($words));
+
+	$query_part .= ' AND (' . substr($concat, 4) . ')';
+	$query_args = array_merge($query_args, $words);
+
+	$arq = $model->where($query_part, $query_args);
+
+	$count = $arq->count;
+	$entries = $arq->limit($position * $limit, $limit)->order('created_at DESC')->all;
+
+	foreach ($entries as $entry)
+	{
+		$entry->body = $entry->description;
+	}
+
+
+	return [ $entries, $count ];
+}
+
 
 
 

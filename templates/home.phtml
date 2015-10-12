@@ -20,6 +20,8 @@ use Brickrouge\Form;
 use Brickrouge\Text;
 
 use Icybee\Modules\Contents\ContentModel as ContentsModel;
+use Icybee\Modules\Contents\ContentModel;
+use Icybee\Modules\Files\FileModel;
 use Icybee\Modules\Pages\PageModel as PagesModel;
 
 /**
@@ -268,9 +270,17 @@ if (empty($_GET['constructor']))
 			{
 				list($entries, $count) = query_pages($search, 0, $_home_limit);
 			}
-			else
+			else if ($model instanceof ContentModel)
 			{
 				list($entries, $count) = query_contents($constructor, $search, 0, $_home_limit);
+			}
+			else if ($model instanceof FileModel)
+			{
+				list($entries, $count) = query_files($constructor, $search, 0, $_home_limit);
+			}
+			else
+			{
+				throw new \InvalidArgumentException("Don't know how to search $constructor.");
 			}
 		}
 
@@ -293,6 +303,8 @@ else
 	{
 		$model = $app->models[$constructor];
 
+		var_dump($model);
+
 		if ($model instanceof PagesModel)
 		{
 			list($entries, $count) = query_pages($search, $position, $_list_limit);
@@ -300,6 +312,10 @@ else
 		else if ($model instanceof ContentsModel)
 		{
 			list($entries, $count) = query_contents($constructor, $search, $position, $_list_limit);
+		}
+		else if ($model instanceof FileModel)
+		{
+			list($entries, $count) = query_files($constructor, $search, $position, $_list_limit);
 		}
 		else
 		{

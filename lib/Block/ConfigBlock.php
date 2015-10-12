@@ -104,7 +104,9 @@ class ConfigBlock extends \Icybee\Block\ConfigBlock
 				continue;
 			}
 
-			if (!$modules->is_inheriting($module_id, 'contents') && !$modules->is_inheriting($module_id, 'pages'))
+			if (!$modules->is_inheriting($module_id, 'contents')
+			&& !$modules->is_inheriting($module_id, 'files')
+			&& !$modules->is_inheriting($module_id, 'pages'))
 			{
 				continue;
 			}

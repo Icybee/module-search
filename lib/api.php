@@ -150,11 +150,9 @@ function query_pages($search, $position, $limit)
 
 	$query_args = [ $app->site_id, '%' . $search . '%' ];
 
-	$count = $model->query
-	(
+	$count = $model->query(
 		'SELECT COUNT(nid) ' . $query_part, $query_args
-	)
-	->fetchColumnAndClose();
+	)->rc;
 
 	$entries = $model->query
 	(

@@ -11,7 +11,6 @@
 
 namespace Icybee\Modules\Search\Block;
 
-use ICanBoogie\I18n;
 use ICanBoogie\Module\Descriptor;
 
 use Brickrouge\A;
@@ -22,8 +21,6 @@ use Brickrouge\Text;
 
 /**
  * A block to configure search.
- *
- * @property-read \ICanBoogie\Core|\Icybee\Binding\CoreBindings $app
  */
 class ConfigBlock extends \Icybee\Block\ConfigBlock
 {

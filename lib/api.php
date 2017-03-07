@@ -2,7 +2,7 @@
 
 namespace Icybee\Modules\Search;
 
-use ICanBoogie\I18n;
+use function ICanBoogie\app;
 use ICanBoogie\Module\Descriptor;
 
 use Brickrouge\Pager;
@@ -140,9 +140,7 @@ function query_google($search, $position, $limit)
 
 function query_pages($search, $position, $limit)
 {
-	/* @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings */
-
-	$app = \ICanBoogie\app();
+	$app = app();
 	$model = $app->models['pages'];
 
 	$query_part = 'FROM {self_and_related} INNER JOIN {self}__contents content ON (nid = page_id AND content_id = "body")
@@ -165,9 +163,7 @@ function query_pages($search, $position, $limit)
 
 function query_contents($constructor, $search, $position, $limit)
 {
-	/* @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings */
-
-	$app = \ICanBoogie\app();
+	$app = app();
 
 	if ($constructor == 'contents')
 	{
@@ -205,9 +201,7 @@ function query_contents($constructor, $search, $position, $limit)
 
 function query_files($constructor, $search, $position, $limit)
 {
-	/* @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings */
-
-	$app = \ICanBoogie\app();
+	$app = app();
 
 	if ($constructor == 'files')
 	{
@@ -255,9 +249,7 @@ function query_files($constructor, $search, $position, $limit)
 
 function make_set($constructor, $entries, $count, $search, $has_pager=false)
 {
-	/* @var $app \ICanBoogie\Core|\Icybee\Binding\CoreBindings */
-
-	$app = \ICanBoogie\app();
+	$app = app();
 
 	$flat_id = 'module.' . strtr($constructor, '.', '_');
 

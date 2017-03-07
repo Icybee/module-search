@@ -8,7 +8,7 @@ The Search module (`search`) provides a search engine for contents and pages.
 
 ## Requirement
 
-The package requires PHP 5.3 or later.
+The package requires PHP 5.6 or later.
 
 
 
@@ -19,15 +19,7 @@ The package requires PHP 5.3 or later.
 The recommended way to install this package is through [Composer](http://getcomposer.org/).
 Create a `composer.json` file and run `php composer.phar install` command to install it:
 
-```json
-{
-	"minimum-stability": "dev",
-	"require":
-	{
-		"icybee/module-search": "*"
-	}
-}
-```
+	$ composer require icybee/module-search
 
 
 

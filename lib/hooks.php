@@ -11,8 +11,7 @@
 
 namespace Icybee\Modules\Search;
 
-use ICanBoogie\I18n;
-
+use function ICanBoogie\app;
 use Brickrouge\Element;
 use Brickrouge\Form;
 use Brickrouge\Searchbox;
@@ -21,7 +20,7 @@ class Hooks
 {
 	static public function markup_form(array $args, \Patron\Engine $patron, $template)
 	{
-		$app = self::app();
+		$app = app();
 		$page = $app->site->resolve_view_target('search/home');
 
 		if (!$page)
@@ -75,7 +74,7 @@ class Hooks
 
 	static public function search($query, $start = 0, array $options = [])
 	{
-		$app = self::app();
+		$app = app();
 		$site = $app->registry['siteSearch.host'];
 
 		if (!$site)
@@ -162,13 +161,5 @@ class Hooks
 		];
 
 		return $patron($template, $response->results);
-	}
-
-	/**
-	 * @return \ICanBoogie\Core|\Icybee\Binding\CoreBindings
-	 */
-	static private function app()
-	{
-		return \ICanBoogie\app();
 	}
 }

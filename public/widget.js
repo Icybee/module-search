@@ -1,6 +1,6 @@
 !function (Brickrouge) {
 
-	Brickrouge.Widget.SearchCombo = new Class ({
+	const SearchCombo = new Class ({
 
 		initialize: function(el, options)
 		{
@@ -22,10 +22,6 @@
 
 	})
 
-	Brickrouge.register('SearchCombo', function (element, options) {
-
-		return new Brickrouge.Widget.SearchCombo(element, options)
-
-	})
+	Brickrouge.register('SearchCombo', (element, options) => SearchCombo(element, options))
 
 } (Brickrouge);
